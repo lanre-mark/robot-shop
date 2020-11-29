@@ -38,6 +38,19 @@ services:
       replicas: 1
       restart_policy:
         condition: on-failure
+    healthcheck:
+      test:
+        [
+          'CMD',
+          'curl',
+          '-H',
+          'X-INSTANA-SYNTHETIC: 1',
+          '-f',
+          'http://localhost:8080/health',
+        ]
+      interval: 1s
+      timeout: 10s
+      retries: 3
   user:
     build:
       context: user
@@ -51,6 +64,19 @@ services:
       replicas: 1
       restart_policy:
         condition: on-failure
+    healthcheck:
+      test:
+        [
+          'CMD',
+          'curl',
+          '-H',
+          'X-INSTANA-SYNTHETIC: 1',
+          '-f',
+          'http://localhost:8080/health',
+        ]
+      interval: 1s
+      timeout: 10s
+      retries: 3
   cart:
     build:
       context: cart
@@ -63,6 +89,19 @@ services:
       replicas: 1
       restart_policy:
         condition: on-failure
+    healthcheck:
+      test:
+        [
+          'CMD',
+          'curl',
+          '-H',
+          'X-INSTANA-SYNTHETIC: 1',
+          '-f',
+          'http://localhost:8080/health',
+        ]
+      interval: 1s
+      timeout: 10s
+      retries: 3
   mysql:
     build:
       context: mysql
@@ -87,6 +126,19 @@ services:
       replicas: 1
       restart_policy:
         condition: on-failure
+    healthcheck:
+      test:
+        [
+          'CMD',
+          'curl',
+          '-H',
+          'X-INSTANA-SYNTHETIC: 1',
+          '-f',
+          'http://localhost:8080/health',
+        ]
+      interval: 1s
+      timeout: 10s
+      retries: 3
   ratings:
     build:
       context: ratings
@@ -99,6 +151,19 @@ services:
       replicas: 1
       restart_policy:
         condition: on-failure
+    healthcheck:
+      test:
+        [
+          'CMD',
+          'curl',
+          '-H',
+          'X-INSTANA-SYNTHETIC: 1',
+          '-f',
+          'http://localhost/_health',
+        ]
+      interval: 1s
+      timeout: 10s
+      retries: 3
   payment:
     build:
       context: payment
@@ -111,6 +176,19 @@ services:
       replicas: 1
       restart_policy:
         condition: on-failure
+    healthcheck:
+      test:
+        [
+          'CMD',
+          'curl',
+          '-H',
+          'X-INSTANA-SYNTHETIC: 1',
+          '-f',
+          'http://localhost:8080/health',
+        ]
+      interval: 1s
+      timeout: 10s
+      retries: 3
   dispatch:
     build:
       context: dispatch
@@ -133,17 +211,29 @@ services:
       - shipping
       - payment
     ports:
-      - "8080:8080"
+      - '8080:8080'
     networks:
       - robot-shop
     deploy:
       replicas: 1
       restart_policy:
         condition: on-failure
+    healthcheck:
+      test:
+        [
+          'CMD',
+          'curl',
+          '-H',
+          'X-INSTANA-SYNTHETIC: 1',
+          '-f',
+          'http://localhost:8080/',
+        ]
+      interval: 1s
+      timeout: 10s
+      retries: 3
     # Uncomment to enable Instana EUM
     # environment:
-      # INSTANA_EUM_KEY: <your eum key here>
+    # INSTANA_EUM_KEY: <your eum key here>
 
 networks:
   robot-shop:
-
