@@ -10,6 +10,11 @@ services:
       replicas: 1
       restart_policy:
         condition: on-failure
+    logging: &logging
+      driver: 'json-file'
+      options:
+        max-size: '25m'
+        max-file: '5'
   redis:
     image: redis:4.0.6
     networks:
@@ -18,6 +23,8 @@ services:
       replicas: 1
       restart_policy:
         condition: on-failure
+    logging:
+      <<: *logging
   rabbitmq:
     image: rabbitmq:3.7-management-alpine
     networks:
@@ -26,6 +33,8 @@ services:
       replicas: 1
       restart_policy:
         condition: on-failure
+    logging:
+      <<: *logging
   catalogue:
     build:
       context: catalogue
@@ -51,6 +60,8 @@ services:
       interval: 1s
       timeout: 10s
       retries: 3
+    logging:
+      <<: *logging
   user:
     build:
       context: user
@@ -77,6 +88,8 @@ services:
       interval: 1s
       timeout: 10s
       retries: 3
+    logging:
+      <<: *logging
   cart:
     build:
       context: cart
@@ -102,6 +115,8 @@ services:
       interval: 1s
       timeout: 10s
       retries: 3
+    logging:
+      <<: *logging
   mysql:
     build:
       context: mysql
@@ -114,6 +129,8 @@ services:
       replicas: 1
       restart_policy:
         condition: on-failure
+    logging:
+      <<: *logging
   shipping:
     build:
       context: shipping
@@ -139,6 +156,8 @@ services:
       interval: 1s
       timeout: 10s
       retries: 3
+    logging:
+      <<: *logging
   ratings:
     build:
       context: ratings
@@ -164,6 +183,8 @@ services:
       interval: 1s
       timeout: 10s
       retries: 3
+    logging:
+      <<: *logging
   payment:
     build:
       context: payment
@@ -189,6 +210,8 @@ services:
       interval: 1s
       timeout: 10s
       retries: 3
+    logging:
+      <<: *logging
   dispatch:
     build:
       context: dispatch
@@ -201,6 +224,8 @@ services:
       replicas: 1
       restart_policy:
         condition: on-failure
+    logging:
+      <<: *logging
   web:
     build:
       context: web
@@ -234,6 +259,7 @@ services:
     # Uncomment to enable Instana EUM
     # environment:
     # INSTANA_EUM_KEY: <your eum key here>
-
+    logging:
+      <<: *logging
 networks:
   robot-shop:
